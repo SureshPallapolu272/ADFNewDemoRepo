@@ -1,0 +1,25 @@
+{
+	"name": "DS_Output",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLSConnect",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Population.tsv",
+				"folderPath": "ECDCData",
+				"fileSystem": "refined"
+			},
+			"columnDelimiter": "\t",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,20 @@
+{
+	"name": "DS_JsonConfig",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_BlobConnect",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "ecdcfiles.json",
+				"container": "config"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
