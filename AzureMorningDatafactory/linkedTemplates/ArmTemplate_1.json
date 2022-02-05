@@ -6,16 +6,37 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "AzureMorningDatafactory"
-		},
-		"Tr_EventTrigger_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/0b09d9a2-10b0-4bdb-966c-fa3ebfa3ba0a/resourceGroups/NewAzureresourceGroup01/providers/Microsoft.Storage/storageAccounts/adfl200morningsa"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_InputFIles')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_BlobConnect",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_InputSales')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -465,6 +486,7 @@
 				"lastPublishTime": "2022-01-30T04:20:51Z"
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_InputFIles')]",
 				"[concat(variables('factoryId'), '/datasets/DS_InputSales')]",
 				"[concat(variables('factoryId'), '/datasets/DS_SQLTable')]"
 			]
@@ -768,6 +790,7 @@
 				"lastPublishTime": "2022-01-30T04:20:50Z"
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_InputFIles')]",
 				"[concat(variables('factoryId'), '/datasets/DS_InputSales')]",
 				"[concat(variables('factoryId'), '/datasets/DS_SQLTable')]"
 			]
@@ -1366,45 +1389,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Tr_EventTrigger')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Pl_Eventtrigger",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "PL_RAWBLOB_To_REFINDADLS",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/raw/blobs/",
-					"blobPathEndsWith": ".gz",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('Tr_EventTrigger_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Pl_Eventtrigger')]",
-				"[concat(variables('factoryId'), '/pipelines/PL_RAWBLOB_To_REFINDADLS')]"
 			]
 		}
 	]
