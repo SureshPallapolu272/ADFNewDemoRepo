@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "AzureMorningDatafactory"
+		},
+		"LS_ADLSConnect_accountKey": {
+			"value": ""
+		},
+		"LS_BlobConnection_connectionString": {
+			"value": ""
+		},
+		"ls_adlsconnection_accountKey": {
+			"value": ""
+		},
+		"LS_ADLSConnect_properties_typeProperties_url": {
+			"value": "https://adfl200adlsgen2.dfs.core.windows.net"
+		},
+		"LS_AKV_properties_typeProperties_baseUrl": {
+			"value": "https://azurekeyvaultdemo001.vault.azure.net/"
+		},
+		"LS_BlobConnect_properties_typeProperties_connectionString_secretName": {
+			"value": "AccountKey"
+		},
+		"LS_HTTPConnection_properties_typeProperties_url": {
+			"value": "@{linkedService().baseURL}"
+		},
+		"LS_SQLConnection_properties_typeProperties_connectionString_secretName": {
+			"value": "SQLConnectionString"
+		},
+		"ls_adlsconnection_properties_typeProperties_url": {
+			"value": "https://adfl200newadls.dfs.core.windows.net"
+		},
+		"Tr_EventTrigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/0b09d9a2-10b0-4bdb-966c-fa3ebfa3ba0a/resourceGroups/NewAzureresourceGroup01/providers/Microsoft.Storage/storageAccounts/adfl200morningsa"
+		}
+	}
+}
